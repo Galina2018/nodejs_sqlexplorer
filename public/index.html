@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <h3 class="mt10">Запрос</h3>
+      <textarea id="request" name="request" class="w90 h90"></textarea>
+      <br /><input type="button" value="выполнить" onclick="sendRequest()" />
+      <h3 class="mt10">Ответ</h3>
+      <div id="response" class="box w90"></div>
+    </div>
+  </body>
+</html>
+<script>
+  async function sendRequest() {
+    const reqText = document.getElementById('request').value;
+    const resBlock = document.getElementById('response');
+    resBlock.innerHTML = '';
+    const response = await fetch('/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'text/plain', // данные запроса передаём в формате text
+        Accept: 'application/json', // в ответ ожидаем данные в формате JSON
+      },
+      body: reqText,
+    });
+    if (response.ok) {
+      const data = await response.json();
+      let res = '';
+      if (Array.isArray(data)) {
+        res += '<table border=1>';
+        const headers = Object.keys(data[0]);
+        headers.forEach((header) => {
+          res += `<th>${header}</th>`;
+        });
+        data.forEach((row, i) => {
+          res += '<tr>';
+          headers.forEach((header) => {
+            res += `<td> ${row[header]}`;
+          });
+          res += '</tr>';
+        });
+        res += '</table>';
+      } else {
+        res = `Количество измененных строк: ${data.changedRows}`;
+        resBlock.innerText = res;
+      }
+      resBlock.innerHTML = res;
+    } else {
+      res = `Error: ${response.statusText}, status ${response.status}.`;
+      resBlock.innerText = res;
+    }
+  }
+</script>

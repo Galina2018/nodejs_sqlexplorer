@@ -1,0 +1,21 @@
+.container {
+  margin: 35px 20px;
+}
+.box {
+  border: solid 1px gray;
+  min-height: 150px;
+
+  margin-top: 10px;
+}
+.mt10 {
+  margin-top: 20px;
+}
+.ml20 {
+  margin-left: 20px;
+}
+.w90 {
+  width: 90%;
+}
+.h90 {
+  min-height: 90px;
+}
