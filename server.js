@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const mysql = require('mysql');
 
 const connectionConfig = {
-  host: 'http://178.172.195.18:7380/',
+  host: 'http://178.172.195.18/',
   user: 'root',
   password: '1234',
   database: 'learning_db',
