@@ -18,7 +18,6 @@ webserver.use(bodyParser.text({}));
 webserver.use(express.static(path.resolve(__dirname, 'public')));
 
 webserver.post('/', (req, res) => {
-  console.log('req.body', req.body);
   try {
     connection = mysql.createConnection(connectionConfig);
     connection.connect();
