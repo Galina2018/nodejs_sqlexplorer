@@ -24,15 +24,14 @@ webserver.post('/', (req, res) => {
       connection.query(`${req.body};`, (error, results) => {
         if (error) {
           res.status(500).send(error);
-          connection.release();
         } else {
-          console.log('results', results[0]);
           res.send(results);
         }
       });
     } catch (err) {
       res.status(500).end();
-      connection.release();
+    } finally {
+      if (connection) connection.release();
     }
   });
 });
